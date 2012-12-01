@@ -88,7 +88,7 @@ and also the `pythonpath` to the full path of this application.
 You can then run uwsgi with `uwsgi --ini /path/to/the/above/config.ini`
 
 ## Excluding Hosts
-If you want to exclude certain hosts from showing up, simply add the IP to
+If you want to exclude certain hosts from showing, simply add the IP to
 the `EXCLUDED_HOSTS` config option:
 
 ```
