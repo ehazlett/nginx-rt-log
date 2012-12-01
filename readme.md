@@ -45,6 +45,13 @@ location / {
 }
 ```
 
+Note: This is for the default location (`/`).  To add to an existing block, simply
+add the `access_by_lua` script before the `try_files`, `root`, or `proxy_pass`.
+
+By default, the Redis keys are set to expire in 10 minutes.  Depending on your
+traffic and your preference of to how long you want data, you can change the
+`r:expire(key, 600);` to a different threshold (in seconds).
+
 Note: if you want a different Redis key (other than the default `client:<ip>`)
 you will need to change it in `config.py` as well as in the Nginx LUA script.
 
