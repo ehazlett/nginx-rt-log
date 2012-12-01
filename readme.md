@@ -47,3 +47,7 @@ location / {
 
 Note: if you want a different Redis key (other than the default `client:<ip>`)
 you will need to change it in `config.py` as well as in the Nginx LUA script.
+
+# Screenshots
+
+![Graph](http://i.imgur.com/6aOf4.png)
