@@ -56,9 +56,11 @@ Note: if you want a different Redis key (other than the default `client:<ip>`)
 you will need to change it in `config.py` as well as in the Nginx LUA script.
 
 # Misc
+
+## High Traffic
 If you have significant traffic you will want to run the Python application with
-uWSGI or Gunicorn as the built in will be overloaded.  Here is a simple uWSGI
-config (ini format):
+uWSGI or Gunicorn as the built in Python server will be overloaded.  Here is a 
+simple uWSGI config (ini format):
 
 ```
 [uwsgi]
@@ -84,6 +86,18 @@ You will need to change the `virtualenv` path to the full path to your virtualen
 and also the `pythonpath` to the full path of this application.
 
 You can then run uwsgi with `uwsgi --ini /path/to/the/above/config.ini`
+
+## Excluding Hosts
+If you want to exclude certain hosts from showing up, simply add the IP to
+the `EXCLUDED_HOSTS` config option:
+
+```
+EXCLUDED_HOSTS = ('127.0.0.1', '10.1.2.3')
+```
+
+## Page Refresh Interval
+You can control how often the page refreshes (default 1 second) via the
+`UPDATE_INTERVAL` config option.
 
 # Screenshots
 
