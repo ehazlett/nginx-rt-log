@@ -10,6 +10,9 @@
         renderTo: 'container',
         type: 'column'
      },
+     legend: {
+       enabled: true
+     },
      plotOptions: {
        column: {
          animation: false
@@ -40,6 +43,7 @@
       for (var i=0, len=data.length; i<len; i++) {
         seriesData.push({name: data[i].client, data: [data[i].requests]});
       }
+      if (data.length > 20) { options.legend.enabled = false; }
       options.series = seriesData;
       chart = new Highcharts.Chart(options);
     });
