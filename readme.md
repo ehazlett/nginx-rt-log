@@ -45,6 +45,8 @@ location / {
 }
 ```
 
+Update the `redis.connect("127.0.0.1", 6379);` line with your Redis host.
+
 Note: This is for the default location (`/`).  To add to an existing block, simply
 add the `access_by_lua` script before the `try_files`, `root`, or `proxy_pass`.
 
