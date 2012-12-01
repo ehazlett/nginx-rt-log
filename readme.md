@@ -103,4 +103,4 @@ You can control how often the page refreshes (default 1 second) via the
 
 # Screenshots
 
-![Graph](http://i.imgur.com/6aOf4.png)
+![Graph](http://i.imgur.com/ZPOOt.png)
