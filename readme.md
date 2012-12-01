@@ -87,6 +87,9 @@ and also the `pythonpath` to the full path of this application.
 
 You can then run uwsgi with `uwsgi --ini /path/to/the/above/config.ini`
 
+You will also want to install the `hiredis` package: `pip install hiredis` for
+improved performance.
+
 ## Excluding Hosts
 If you want to exclude certain hosts from showing, simply add the IP to
 the `EXCLUDED_HOSTS` config option:
