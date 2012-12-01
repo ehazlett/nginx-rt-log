@@ -24,7 +24,10 @@ redis = redis.init_redis(app)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    ctx = {
+        'update_interval': app.config.get('UPDATE_INTERVAL')
+    }
+    return render_template('index.html', **ctx)
 
 @app.route('/stats')
 def stats():

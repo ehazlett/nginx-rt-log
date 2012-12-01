@@ -23,6 +23,7 @@ REDIS_PORT = 6379
 REDIS_DB = 0
 REDIS_PASSWORD = None
 SECRET_KEY = '1q2w3e4r5t6y7u8i9o0p'
+UPDATE_INTERVAL = 1000 # update in milliseconds for the UI to refresh
 # cache
 CACHE_TYPE = 'redis'
 CACHE_REDIS_HOST = REDIS_HOST

@@ -55,6 +55,36 @@ traffic and your preference of to how long you want data, you can change the
 Note: if you want a different Redis key (other than the default `client:<ip>`)
 you will need to change it in `config.py` as well as in the Nginx LUA script.
 
+# Misc
+If you have significant traffic you will want to run the Python application with
+uWSGI or Gunicorn as the built in will be overloaded.  Here is a simple uWSGI
+config (ini format):
+
+```
+[uwsgi]
+master = true
+workers = 4
+http = 0.0.0.0:5000
+die-on-term = true
+uid = www-data
+gid = www-data
+enable-threads = true
+virtualenv = /path/to/virtualenv
+buffer-size = 32768
+no-orphans = true
+vacuum = true
+pythonpath = /path/to/nginx-rt-log
+module = wsgi:application
+
+```
+
+Make sure you have uWSGI installed: `pip install uwsgi`.
+
+You will need to change the `virtualenv` path to the full path to your virtualenv
+and also the `pythonpath` to the full path of this application.
+
+You can then run uwsgi with `uwsgi --ini /path/to/the/above/config.ini`
+
 # Screenshots
 
 ![Graph](http://i.imgur.com/6aOf4.png)
