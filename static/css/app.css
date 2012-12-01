@@ -1,0 +1,43 @@
+body, html {
+  background: url('/static/img/bg.png');
+  font-family: 'Dosis', sans-serif;
+  height: 100%;
+}
+input, button {
+  font-family: 'Dosis', sans-serif;
+}
+div.content {
+  margin: 50px 10px 0 10px;
+  height: 100%;
+}
+div#container {
+  height: 100%;
+}
+hide {
+  display: none;
+}
+.center {
+  margin: 0px auto 0px auto;
+  text-align: center;
+}
+.well {
+  border: 1px solid #d5d5d5;
+}
+.alert {
+  position: fixed;
+  overflow: visible;
+  top: 15px;
+  left: 22%;
+  right: 0;
+  width: 50%;
+  margin: 0 auto 0 auto;
+  font-size: 16px;
+  text-align: center;
+  z-index: 9999;
+  margin: 0 5px 0 5px;
+  padding-top: 10px;
+  padding-bottom: 5px;
+}
+label.error {
+  color: #b20000
+}

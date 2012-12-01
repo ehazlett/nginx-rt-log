@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block root_content %}
+<div id="container"></div>
+<script type="text/javascript">
+  var chart; // globally available
+  var options = {
+     chart: {
+        animation: false,
+        renderTo: 'container',
+        type: 'column'
+     },
+     plotOptions: {
+       column: {
+         animation: false
+       }
+     },
+     title: {
+        text: 'Requests'
+     },
+     xAxis: {
+       categories: ['Client']
+     },
+     yAxis: {
+       title: {
+         text: 'Requests'
+       }
+     },
+     series: [{
+       name: 'Requests',
+       dataLabels: {
+         enabled: true,
+       },
+       data: []
+     }]
+  }
+  function update(){
+    $.getJSON('/stats', function(data) {
+      var seriesData = [];
+      for (var i=0, len=data.length; i<len; i++) {
+        seriesData.push({name: data[i].client, data: [data[i].requests]});
+      }
+      options.series = seriesData;
+      chart = new Highcharts.Chart(options);
+    });
+  }
+  $(function() {
+    update();
+    setInterval(update, 500);
+  });
+</script>
+{% endblock %}
