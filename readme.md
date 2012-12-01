@@ -23,7 +23,6 @@ the redis-lua library.  Here is an example setup for Ubuntu 12.04:
 apt-get install -y nginx-extras liblua5.1-socket2
 mkdir -p /usr/share/lua/5.1/
 wget https://raw.github.com/nrk/redis-lua/version-2.0/src/redis.lua -O /usr/share/lua/5.1/redis.lua
-
 ```
 
 Then add the following LUA script to the Nginx config:
@@ -79,7 +78,6 @@ no-orphans = true
 vacuum = true
 pythonpath = /path/to/nginx-rt-log
 module = wsgi:application
-
 ```
 
 Make sure you have uWSGI installed: `pip install uwsgi`.
