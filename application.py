@@ -38,11 +38,13 @@ def stats():
         client = k
         if k.find(':') > -1:
             client = k.split(':')[-1]
-        req = redis.get(k)
-        if req == None:
-          req = 0
-        d = {'client': client, 'requests': int(req)}
-        stats.append(d)
+        # check for excluded host
+        if client not in app.config.get('EXCLUDED_HOSTS'):
+            req = redis.get(k)
+            if req == None:
+              req = 0
+            d = {'client': client, 'requests': int(req)}
+            stats.append(d)
     return json.dumps(stats)
 
 if __name__=='__main__':

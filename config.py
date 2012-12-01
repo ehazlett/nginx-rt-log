@@ -18,6 +18,7 @@ import logging
 APP_NAME = 'nginx-rt'
 APP_VERSION = '0.1'
 CLIENT_KEY = 'clients:{0}'
+EXCLUDED_HOSTS = []
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
 REDIS_DB = 0
