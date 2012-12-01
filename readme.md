@@ -37,7 +37,7 @@ location / {
       else
         local key = "clients:" .. ngx.var.remote_addr;
         r:incr(key);
-        r:expire(key, 600);
+        r:expire(key, 30);
       end
     ';
     try_files $uri $uri/ /index.html;
@@ -49,9 +49,9 @@ Update the `redis.connect("127.0.0.1", 6379);` line with your Redis host.
 Note: This is for the default location (`/`).  To add to an existing block, simply
 add the `access_by_lua` script before the `try_files`, `root`, or `proxy_pass`.
 
-By default, the Redis keys are set to expire in 10 minutes.  Depending on your
+By default, the Redis keys are set to expire in 30 seconds.  Depending on your
 traffic and your preference of to how long you want data, you can change the
-`r:expire(key, 600);` to a different threshold (in seconds).
+`r:expire(key, 30);` to a different threshold (in seconds).
 
 Note: if you want a different Redis key (other than the default `client:<ip>`)
 you will need to change it in `config.py` as well as in the Nginx LUA script.
