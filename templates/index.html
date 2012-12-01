@@ -2,7 +2,8 @@
 
 {% block root_content %}
 <div class="pull-right toolbar">
-  <a id="btn-update" href="#" class="btn">Pause</a>
+  <a id="btn-update" href="#" class="btn">{{_('Pause')}}</a>
+  <a id="btn-reset" href="#" class="btn">{{_('Reset')}}</a>
 </div>
 <div id="container"></div>
 <script type="text/javascript">
@@ -23,18 +24,18 @@
        }
      },
      title: {
-        text: 'Requests'
+        text: "{{_('Requests')}}"
      },
      xAxis: {
-       categories: ['Clients']
+       categories: ["{{_('Clients')}}"]
      },
      yAxis: {
        title: {
-         text: 'Requests'
+         text: "{{_('Requests')}}"
        }
      },
      series: [{
-       name: 'Requests',
+       name: "{{_('Requests')}}",
        dataLabels: {
          enabled: true,
        },
@@ -43,15 +44,21 @@
   }
   $("a#btn-update").click(function(){
     if (updateInterval) {
-      $(this).text('Start');
+      $(this).text("{{_('Start')}}");
       stopUpdater();
     } else {
-      $(this).text('Stop');
+      $(this).text("{{_('Stop')}}");
       startUpdater();
     }
   });
+  $("a#btn-reset").click(function(){
+    if (confirm("{{_('Reset stats?')}}")) {
+      $.get("{{url_for('reset_stats')}}");
+      return false;
+    }
+  });
   function update(){
-    $.getJSON('/stats', function(data) {
+    $.getJSON("{{url_for('stats')}}", function(data) {
       var seriesData = [];
       for (var i=0, len=data.length; i<len; i++) {
         seriesData.push({name: data[i].client, data: [data[i].requests]});

@@ -14,6 +14,7 @@
 # limitations under the License.
 import sys
 from flask import Flask, redirect, render_template, url_for, jsonify, json
+from flask.ext.babel import Babel
 from flask.ext.cache import Cache
 from flask.ext import redis
 import config
@@ -21,6 +22,7 @@ import config
 app = config.create_app()
 cache = Cache(app)
 redis = redis.init_redis(app)
+babel = Babel(app)
 
 @app.route('/')
 def index():
@@ -46,6 +48,11 @@ def stats():
             d = {'client': client, 'requests': int(req)}
             stats.append(d)
     return json.dumps(stats)
+
+@app.route('/stats/reset')
+def reset_stats():
+    redis.flushdb()
+    return redirect(url_for('index'))
 
 if __name__=='__main__':
     from optparse import OptionParser
