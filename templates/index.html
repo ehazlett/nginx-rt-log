@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
 
 {% block root_content %}
+<div class="pull-right toolbar">
+  <a id="btn-update" href="#" class="btn">Pause</a>
+</div>
 <div id="container"></div>
 <script type="text/javascript">
-  var chart; // globally available
+  var updateInterval;
+  var chart;
   var options = {
      chart: {
         animation: false,
@@ -37,6 +41,15 @@
        data: []
      }]
   }
+  $("a#btn-update").click(function(){
+    if (updateInterval) {
+      $(this).text('Start');
+      stopUpdater();
+    } else {
+      $(this).text('Stop');
+      startUpdater();
+    }
+  });
   function update(){
     $.getJSON('/stats', function(data) {
       var seriesData = [];
@@ -48,9 +61,16 @@
       chart = new Highcharts.Chart(options);
     });
   }
+  function startUpdater() {
+    updateInterval = setInterval(update, 1000);
+  }
+  function stopUpdater() {
+    clearInterval(updateInterval);
+    updateInterval = null;
+  }
   $(function() {
     update();
-    setInterval(update, 1000);
+    startUpdater();
   });
 </script>
 {% endblock %}

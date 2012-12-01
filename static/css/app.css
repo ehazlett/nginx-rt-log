@@ -13,6 +13,9 @@ div.content {
 div#container {
   height: 100%;
 }
+.toolbar {
+  margin: 10px 10px 0 0;
+}
 hide {
   display: none;
 }
