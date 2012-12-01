@@ -35,7 +35,10 @@ def stats():
         client = k
         if k.find(':') > -1:
             client = k.split(':')[-1]
-        d = {'client': client, 'requests': int(redis.get(k))}
+        req = redis.get(k)
+        if req == None:
+          req = 0
+        d = {'client': client, 'requests': int(req)}
         stats.append(d)
     return json.dumps(stats)
 
