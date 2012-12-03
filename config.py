@@ -19,6 +19,7 @@ APP_NAME = 'nginx-rt'
 APP_VERSION = '0.1'
 CLIENT_KEY = 'clients:{0}'
 EXCLUDED_HOSTS = []
+MINIMUM_REQUESTS = 0 # minimum number of requests a client must have to be shown
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
 REDIS_DB = 0

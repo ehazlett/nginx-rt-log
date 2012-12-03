@@ -45,8 +45,10 @@ def stats():
             req = redis.get(k)
             if req == None:
               req = 0
-            d = {'client': client, 'requests': int(req)}
-            stats.append(d)
+            req = int(req)
+            if req > app.config.get('MINIMUM_REQUESTS'):
+                d = {'client': client, 'requests': req}
+                stats.append(d)
     return json.dumps(stats)
 
 @app.route('/stats/reset')
