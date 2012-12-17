@@ -43,10 +43,14 @@ db.on("message", function(channel, message){
   try {
     var data = message.split(":");
     var client = data[0];
+    var requests = data[1];
     if (settings.EXCLUDED_HOSTS.indexOf(client) != -1) {
       console.log("Skipping excluded host " + client);
     } else {
-      io.sockets.emit('data', { client: client, value: data[1]});
+      // check for min requests
+      if (requests > settings.MINIMUM_REQUESTS) {
+        io.sockets.emit('data', { client: client, value: requests});
+      }
     }
   } catch (err) {
     console.log('Error parsing message: ' + err);

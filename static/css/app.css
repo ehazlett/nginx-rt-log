@@ -18,6 +18,7 @@ body {
 }
 div#legend {
   margin: 15px 0 0 0;
+  word-wrap: break-word;
 }
 a.legendItemRemove, a.legendItemRemove:hover {
   font-size: 10px;
