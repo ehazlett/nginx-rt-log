@@ -67,4 +67,4 @@ EXCLUDED_HOSTS: [ '127.0.0.1' ],
 
 # Screenshots
 
-![Graph](http://i.imgur.com/ZPOOt.png)
+![Graph](http://i.imgur.com/IwFVe.png)
