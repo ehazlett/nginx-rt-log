@@ -1,18 +1,18 @@
 # Nginx Realtime Log
-This is a simple Flask app that will report (near)realtime visitors and the
+This is a Node.js app that will report realtime visitors and the
 number of requests.
 
 # Setup
 The app uses Redis.  This assumes Redis is on localhost.  Update the settings
-in `config.py`.
+in `settings.js`.
 
 ```
-pip install -r requirements.txt
-python application.py
+npm install
+node app.js
 
 ```
 
-Then open browser to http://localhost:5000/
+Then open browser to http://localhost:3000/
 
 # Nginx Setup
 In order to log requests, the following LUA script needs to be put into the
@@ -38,6 +38,7 @@ location / {
         local key = "clients:" .. ngx.var.remote_addr;
         r:incr(key);
         r:expire(key, 30);
+        r:publish("nginx-rt", client .. ":" .. r:get(key));
       end
     ';
     try_files $uri $uri/ /index.html;
@@ -53,54 +54,15 @@ By default, the Redis keys are set to expire in 30 seconds.  Depending on your
 traffic and your preference of to how long you want data, you can change the
 `r:expire(key, 30);` to a different threshold (in seconds).
 
-Note: if you want a different Redis key (other than the default `client:<ip>`)
-you will need to change it in `config.py` as well as in the Nginx LUA script.
-
 # Misc
-
-## High Traffic
-If you have significant traffic you will want to run the Python application with
-uWSGI or Gunicorn as the built in Python server will be overloaded.  Here is a 
-simple uWSGI config (ini format):
-
-```
-[uwsgi]
-master = true
-workers = 4
-http = 0.0.0.0:5000
-die-on-term = true
-uid = www-data
-gid = www-data
-enable-threads = true
-virtualenv = /path/to/virtualenv
-buffer-size = 32768
-no-orphans = true
-vacuum = true
-pythonpath = /path/to/nginx-rt-log
-module = wsgi:application
-```
-
-Make sure you have uWSGI installed: `pip install uwsgi`.
-
-You will need to change the `virtualenv` path to the full path to your virtualenv
-and also the `pythonpath` to the full path of this application.
-
-You can then run uwsgi with `uwsgi --ini /path/to/the/above/config.ini`
-
-You will also want to install the `hiredis` package: `pip install hiredis` for
-improved performance.
 
 ## Excluding Hosts
 If you want to exclude certain hosts from showing, simply add the IP to
-the `EXCLUDED_HOSTS` config option:
+the `EXCLUDED_HOSTS` array in `settings.js`:
 
 ```
-EXCLUDED_HOSTS = ('127.0.0.1', '10.1.2.3')
+EXCLUDED_HOSTS: [ '127.0.0.1' ],
 ```
-
-## Page Refresh Interval
-You can control how often the page refreshes (default 1 second) via the
-`UPDATE_INTERVAL` config option.
 
 # Screenshots
 
