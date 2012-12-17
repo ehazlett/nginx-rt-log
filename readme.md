@@ -36,7 +36,7 @@ location / {
       if not r:ping() then
         ngx.log(ngx.WARN, "Redis error");
       else
-        local key = "clients:" .. ngx.var.remote_addr;
+        local key = "clients:" .. client;
         local requests = r:incr(key);
         r:expire(key, 30);
         r:publish("nginx-rt", client .. ":" .. requests);
