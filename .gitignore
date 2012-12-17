@@ -1,8 +1,8 @@
-*.pyc
 *.swp
 *.swo
 *.un*
-local_config.py
+local_settings.js
 *.log
 newrelic.ini
 *DS_Store*
+node_modules/*

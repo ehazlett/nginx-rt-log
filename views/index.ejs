@@ -1,0 +1,48 @@
+<% include header %>
+<div class="container content center">
+  <canvas id="graph" width="800" height="400px"></canvas>
+  <div id="legend" class="well"></div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript">
+  var graph;
+  var smoothie;
+  var socket;
+  var clients = {};
+  function addClientGraph(name){
+    var line = new TimeSeries();
+    clients[name] = line;
+    var id = name.replace(/\./g, '');
+    var colorR = Math.floor((Math.random()*200)+50);
+    var colorG = Math.floor((Math.random()*200)+50);
+    var colorB = Math.floor((Math.random()*200)+50);
+    var colorRGB = 'rgb('+colorR+','+colorG+','+colorB+')';
+    var colorRGBA = 'rgba('+colorR+','+colorG+','+colorB+', 0.5)';
+    smoothie.addTimeSeries(line, { strokeStyle:colorRGB, fillStyle:colorRGBA, lineWidth:3 });
+    $("#legend").append('<span id="'+id+'" class="legendItem" style="color:'+colorRGB+';">'+name+'</span>');
+  }
+  $(function(){
+    smoothie = new SmoothieChart({
+      grid: {
+        strokeStyle:'rgb(125, 125, 125)',
+        fillStyle:'rgb(0, 0, 0)',
+        lineWidth: 1,
+        millisPerLine: 250,
+        verticalSections: 5
+      }
+    });
+    graph = document.getElementById("graph");
+    smoothie.streamTo(graph);
+    socket = io.connect('ws://'+window.location.host);
+    socket.on('data', function (data) {
+      console.log(data);
+      if (data.hasOwnProperty('value')) {
+        if (! clients.hasOwnProperty(data.client)){
+          addClientGraph(data.client);
+        }
+        clients[data.client].append(new Date().getTime(), data.value);
+      }
+    });
+  });
+</script>
+<% include footer.ejs %>
