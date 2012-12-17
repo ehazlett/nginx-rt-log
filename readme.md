@@ -32,13 +32,14 @@ location / {
     access_by_lua '
       local redis = require "redis";
       local r = redis.connect("127.0.0.1", 6379);
+      local client = ngx.var.remote_addr;
       if not r:ping() then
         ngx.log(ngx.WARN, "Redis error");
       else
         local key = "clients:" .. ngx.var.remote_addr;
-        r:incr(key);
+        local requests = r:incr(key);
         r:expire(key, 30);
-        r:publish("nginx-rt", client .. ":" .. r:get(key));
+        r:publish("nginx-rt", client .. ":" .. requests);
       end
     ';
     try_files $uri $uri/ /index.html;

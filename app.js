@@ -1,4 +1,3 @@
-var PORT = process.env.VCAP_APP_PORT || 3000;
 var express = require("express")
   , settings = require("./settings").settings
   , i18n = require("i18n")
@@ -9,6 +8,7 @@ var express = require("express")
   , io = require("socket.io").listen(server);
 
 var db = redis.createClient(settings.REDIS_PORT, settings.REDIS_HOST);
+var PORT = process.env.VCAP_APP_PORT || settings.PORT;
 
 // i18n configuration
 i18n.configure({
