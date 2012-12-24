@@ -48,8 +48,11 @@ db.on("message", function(channel, message){
       console.log("Skipping excluded host " + client);
     } else {
       // check for min requests
-      if (requests > settings.MINIMUM_REQUESTS) {
-        io.sockets.emit('data', { client: client, value: requests});
+      if (requests >= settings.MINIMUM_REQUESTS) {
+        // check for max requests
+        if (settings.MAXIMUM_REQUESTS == 0 || requests <= settings.MAXIMUM_REQUESTS) {
+          io.sockets.emit('data', { client: client, value: requests});
+        }
       }
     }
   } catch (err) {

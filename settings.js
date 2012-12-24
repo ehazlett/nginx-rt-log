@@ -8,6 +8,7 @@ exports.settings = {
     APP_TITLE: 'nginx-rt',
     EXCLUDED_HOSTS: local.EXCLUDED_HOSTS || [],
     MINIMUM_REQUESTS: local.MINIMUM_REQUESTS || 0,
+    MAXIMUM_REQUESTS: local.MAXIMUM_REQUESTS || 0,
     PORT: local.PORT || 3000,
     REDIS_HOST: local.REDIS_HOST || '127.0.0.1',
     REDIS_PORT: local.REDIS_PORT || 6379,
